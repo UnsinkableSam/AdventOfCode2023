@@ -5,21 +5,36 @@ import (
     "fmt"
     "strconv"
     "strings"
+    "os"
 )
 
 func main()  {
-    array :=  [4]string{"1abc2","pqr3stu8vwx","a1b2c3d4e5f","treb7uchet"}
+     b, err := os.ReadFile("./input.txt")
+     if err != nil {
+         panic(err)
+     }
+    input := string(b)
+    array := strings.Split(input, "\n")
+
     resultArray := array
     totalsum := 0
-    for i , item := range array  {
+    for i, item := range array {
+        if (item == "") {
+            break
+        }
+        fmt.Println("first" + item)
         resultArray[i] = ""
         lettersReverse := strings.Split(reverseSting(item),  "")
         letters := strings.Split(item, "")
 
-        resultArray[i] = resultArray[i] + findDigit(letters)
-        resultArray[i] = resultArray[i] + findDigit(lettersReverse)
 
+        resultArray[i] = findDigit(letters)
+        fmt.Println(resultArray[i])
+        resultArray[i] = resultArray[i] +  findDigit(lettersReverse)
+
+        fmt.Println(resultArray[i])
         totalsum =  sum(resultArray[i]) + totalsum
+
 
     }
         fmt.Println(totalsum)
